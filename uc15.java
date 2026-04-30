@@ -1,43 +1,50 @@
-// UC: Validate if move is within bounds and cell is empty
-
 public class uc15 {
 
-    // Method to check valid move
-    public static boolean isValidMove(char[][] board, int row, int column) {
+    char[][] board = new char[3][3];
 
-        int boardSize = 3;
+    // Initialize board
+    public uc15() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                board[i][j] = ' ';
+            }
+        }
+    }
 
-        // Check boundaries
-        if (row < 0 || row >= boardSize || column < 0 || column >= boardSize) {
+    // Validate move
+    boolean isValidMove(int row, int col) {
+        return (row >= 0 && row < 3 &&
+                col >= 0 && col < 3 &&
+                board[row][col] == ' ');
+    }
+
+    // UC6: Update board
+    boolean updateBoard(int row, int col, char symbol) {
+        if (isValidMove(row, col)) {
+            board[row][col] = symbol;
+            return true;
+        } else {
+            System.out.println("Invalid move!");
             return false;
         }
+    }
 
-        // Check if cell is empty
-        if (board[row][column] != '-') {
-            return false;
+    // Display board (FIXED)
+    void displayBoard() {
+        for (int i = 0; i < 3; i++) {
+            System.out.println(" " + board[i][0] + " | " + board[i][1] + " | " + board[i][2]);
+            if (i < 2) {
+                System.out.println("---|---|---");
+            }
         }
-
-        return true;
     }
 
     public static void main(String[] args) {
+        uc15 game = new uc15();
 
-        // Sample board
-        char[][] board = {
-            {'-', '-', '-'},
-            {'-', 'X', '-'},
-            {'-', '-', '-'}
-        };
+        game.updateBoard(0, 0, 'X');
+        game.updateBoard(1, 1, 'O');
 
-        int row = 1;
-        int column = 1;
-
-        boolean result = isValidMove(board, row, column);
-
-        if (result) {
-            System.out.println("Valid Move");
-        } else {
-            System.out.println("Invalid Move");
-        }
+        game.displayBoard();
     }
 }
